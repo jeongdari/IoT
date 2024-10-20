@@ -1,70 +1,65 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { Image, StyleSheet, View, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window'); // Get screen width and height
+
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <View style={styles.container}>
+      {/* Image in the top half of the screen */}
+      <View style={styles.topHalf}>
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('@/assets/images/Charmyglass.png')} // Path to your image
+          style={styles.logo}
+          resizeMode="contain" // Keep image ratio while fitting in the space
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      </View>
+
+      {/* Text in the bottom half of the screen */}
+      <View style={styles.bottomHalf}>
+        <ThemedView style={styles.textBox}>
+          <ThemedText type="title" style={styles.text}>
+            Main Cooling Room
+          </ThemedText>
+        </ThemedView>
+        <ThemedView style={styles.textBox}>
+          <ThemedText type="title" style={styles.text}>
+            Temperature Monitoring App
+          </ThemedText>
+        </ThemedView>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1, // Container takes up the whole screen
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  topHalf: {
+    flex: 1, // Top half of the screen
+    justifyContent: 'center', // Vertically center the content
+    alignItems: 'center', // Horizontally center the content
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logo: {
+    width: windowWidth, // Set the image width to 80% of the screen width
+    height: '80%', // The image height takes up 80% of the top half
+  },
+  bottomHalf: {
+    flex: 1, // Bottom half of the screen
+    justifyContent: 'center', // Vertically center the text
+    alignItems: 'center', // Horizontally center the text
+    backgroundColor: '#fff', // White background
+  },
+  textBox: {
+    marginBottom: 20, // Add space between the text boxes
+    alignItems: 'center', // Center align the text horizontally
+  },
+  text: {
+    fontSize: 24, // Text size
+    fontWeight: 'bold', // Bold text
+    color: '#333', // Text color
+    textAlign: 'center', // Center-align the text
   },
 });
