@@ -1,0 +1,36 @@
+int redpin = 11;  // Pin for the red LED
+int greenpin = 10; // Pin for the green LED
+
+String command = "";  // Variable to store incoming Bluetooth command
+
+void setup() {
+  // Set the pins for the LEDs as output
+  pinMode(redpin, OUTPUT);
+  pinMode(greenpin, OUTPUT);
+
+  // Start serial communication with the Raspberry Pi (Bluetooth connection)
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Check if data is available from the Raspberry Pi over Bluetooth
+  if (Serial.available() > 0) {
+    // Read the incoming command from the Raspberry Pi
+    command = Serial.readStringUntil('\n');
+    command.trim();  // Remove any extra whitespace or newline characters
+
+    // Check the received command and control the LEDs accordingly
+    if (command == "RED_ON") {
+      digitalWrite(redpin, HIGH);  // Turn on the red LED
+      digitalWrite(greenpin, LOW); // Turn off the green LED
+      Serial.println("Red LED is ON, Green LED is OFF");
+    } else if (command == "GREEN_ON") {
+      digitalWrite(redpin, LOW);   // Turn off the red LED
+      digitalWrite(greenpin, HIGH); // Turn on the green LED
+      Serial.println("Green LED is ON, Red LED is OFF");
+    } else {
+      // Handle any unexpected command (optional)
+      Serial.println("Unknown command received");
+    }
+  }
+}
